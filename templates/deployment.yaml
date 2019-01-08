@@ -41,7 +41,7 @@ spec:
           - name: PGSQL_USER
             value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
-            value: {{ .Values.db.pgsql.pass | quote }}
+            value: {{ .Values.db.pgsql.pass }}
           - name: ZBX_INITDATA
             value: {{ .Values.db.env.initdata }}
           - name: ZBX_PURGE_RAW
@@ -116,7 +116,7 @@ spec:
           - name: PGSQL_USER
             value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
-            value: {{ .Values.db.pgsql.pass | quote }}
+            value: {{ .Values.db.pgsql.pass }}
 
       restartPolicy: Always
       imagePullSecrets:
@@ -188,7 +188,7 @@ spec:
           - name: PGSQL_USER
             value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
-            value: {{ .Values.db.pgsql.pass | quote }}
+            value: {{ .Values.db.pgsql.pass }}
 
       restartPolicy: Always
       imagePullSecrets:
