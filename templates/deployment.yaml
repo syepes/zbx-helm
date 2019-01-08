@@ -106,16 +106,16 @@ spec:
           - name: {{ .Values.srv.service.name }}
             containerPort: {{ .Values.srv.service.servicePort }}
             protocol: TCP
-          livenessProbe:
-            tcpSocket:
-              port: {{ .Values.srv.service.servicePort }}
-            initialDelaySeconds: 10
-            periodSeconds: 5
-          readinessProbe:
-            tcpSocket:
-              port: {{ .Values.srv.service.servicePort }}
-            intialDelaySeconds: 10
-            periodSeconds: 5
+            #          livenessProbe:
+            #            tcpSocket:
+            #              port: {{ .Values.srv.service.servicePort }}
+            #            initialDelaySeconds: 10
+            #            periodSeconds: 5
+            #          readinessProbe:
+            #            tcpSocket:
+            #              port: {{ .Values.srv.service.servicePort }}
+            #            intialDelaySeconds: 10
+            #            periodSeconds: 5
           env:
           - name: PGSQL_HOST
             value: {{ .Values.db.name }}

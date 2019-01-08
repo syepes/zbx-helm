@@ -2,7 +2,7 @@ appVersion: v1
 appVersion: "1.0"
 name: zbx-syf
 description: Zabbix deployment
-version: zbx-syf
+version: 0.2.0
 keywords:
   - monitoring
   - zabbix
