@@ -16,7 +16,8 @@ web:
     # nodePort: 
   ingress:
     enabled: true
-    paths: []
+    paths:
+      - "/"
     hosts:
       - xip.io
     annotations:
