@@ -97,12 +97,12 @@ spec:
           livenessProbe:
             tcpSocket:
               port: {{ .Values.srv.service.servicePort }}
-            initialDelaySeconds: 30
+            initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             tcpSocket:
               port: {{ .Values.srv.service.servicePort }}
-            intialDelaySeconds: 30
+            intialDelaySeconds: 5
             periodSeconds: 5
           env:
           - name: PGSQL_HOST
@@ -166,13 +166,13 @@ spec:
             httpGet:
               path: /
               port: http
-            initialDelaySeconds: 30
+            initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /
               port: http
-            intialDelaySeconds: 30
+            intialDelaySeconds: 5
             periodSeconds: 5
           env:
           - name: ZBX_SRV_HOST

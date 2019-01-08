@@ -45,7 +45,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.srv.service.name }}
+  name: {{ .Values.srv.name }}
   labels:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
     helm.sh/chart: {{ include "zabbix.chart" . }}
