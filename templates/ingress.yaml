@@ -1,6 +1,7 @@
 {{- if .Values.web.ingress.enabled -}}
 {{- $fullName := include "zabbix.fullname" . -}}
 {{- $serviceName := .Values.web.service.name -}}
+{{- $servicePort := .Values.web.service.servicePort -}}
 {{- $ingressPaths := .Values.web.ingress.paths -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -26,7 +27,7 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: {{ $serviceName }}
-              servicePort: {{ .Values.web.service.name }}
+              servicePort: {{ $servicePort }}
   {{- end }}
   {{- end }}
 {{- end }}
