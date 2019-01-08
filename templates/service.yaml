@@ -54,7 +54,7 @@ metadata:
 spec:
   type: {{ .Values.srv.service.type }}
   ports:
-    - name: zbx-trapper
+    - name: zbx-srv
       port: {{ .Values.srv.service.servicePort }}
       targetPort: {{ .Values.srv.service.servicePort }}
       protocol: TCP

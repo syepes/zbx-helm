@@ -42,6 +42,12 @@ spec:
             value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
             value: {{ .Values.db.pgsql.pass }}
+          - name: ZBX_INITDATA
+            value: {{ .Values.db.env.ZBX_INITDATA }}
+          - name: ZBX_PURGE_RAW
+            value: {{ .Values.db.env.ZBX_PURGE_RAW }}
+          - name: ZBX_PURGE_TREND
+            value: {{ .Values.db.env.ZBX_PURGE_TREND }}
 
       restartPolicy: Always
       imagePullSecrets:
