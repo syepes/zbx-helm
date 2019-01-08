@@ -175,14 +175,14 @@ spec:
             intialDelaySeconds: 30
             periodSeconds: 5
           env:
+          - name: ZBX_SRV_HOST
+            value: {{ .Values.srv.name }}
           - name: PGSQL_HOST
             value: {{ .Values.db.name }}
           - name: PGSQL_USER
             value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
             value: {{ .Values.db.pgsql.pass }}
-          - name: ZBX_SRV_HOST
-            values: {{ .Values.srv.name }}
 
       restartPolicy: Always
       imagePullSecrets:
