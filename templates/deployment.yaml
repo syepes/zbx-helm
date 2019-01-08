@@ -58,7 +58,7 @@ spec:
       - name: data
       {{- if .Values.db.persistence.enabled }}
         persistentVolumeClaim:
-          claimName: {{ .Values.db.persistence.existingClaim | default (include "zabbix.fullname" .) }}
+          claimName: {{ .Values.db.persistence.existingClaim }}
       {{- else }}
         emptyDir: {}
       {{- end -}}
