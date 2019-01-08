@@ -12,6 +12,7 @@ spec:
   ports:
     - name: postgres
       port: {{ .Values.db.service.servicePort }}
+      targetPort: {{ .Values.db.service.servicePort }}
       protocol: TCP
   selector:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
@@ -33,6 +34,7 @@ spec:
   ports:
     - name: http
       port: {{ .Values.web.service.servicePort }}
+      targetPort: {{ .Values.web.service.servicePort }}
       protocol: TCP
   selector:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
@@ -54,6 +56,7 @@ spec:
   ports:
     - name: zbx-trapper
       port: {{ .Values.srv.service.servicePort }}
+      targetPort: {{ .Values.srv.service.servicePort }}
       protocol: TCP
   selector:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
