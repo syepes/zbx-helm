@@ -7,9 +7,10 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app.kubernetes.io/name: {{ include "zabbix.name" . }}
     helm.sh/chart: {{ include "zabbix.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ include "zabbix.name" . }}
+    app.kubernetes.io/instance: {{ .Values.web.name }}
+    app.kubernetes.io/release: {{ .Release.name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   {{- with .Values.web.ingress.annotations }}
   annotations:
@@ -25,7 +26,7 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: {{ $serviceName }}
-              servicePort: http
+              servicePort: {{ .Values.web.service.name }}
   {{- end }}
   {{- end }}
 {{- end }}
