@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: {{ .Values.db.name }}
   labels:
-    app.kubernetes.io/name: {{ include "zabbix.name" . }}
     helm.sh/chart: {{ include "zabbix.chart" . }}
-    app.kubernetes.io/instance: {{ .Values.db.service.name }}
+    app.kubernetes.io/name: {{ include "zabbix.name" . }}
+    app.kubernetes.io/instance: {{ .Values.db.name }}
+    app.kubernetes.io/release: {{ .Release.name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.db.service.type }}
@@ -23,33 +24,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.web.name }}
-  labels:
-    app.kubernetes.io/name: {{ include "zabbix.name" . }}
-    helm.sh/chart: {{ include "zabbix.chart" . }}
-    app.kubernetes.io/instance: {{ .Values.web.service.name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-spec:
-  type: {{ .Values.web.service.type }}
-  ports:
-    - name: {{ .Values.web.service.name }}
-      port: {{ .Values.web.service.servicePort }}
-      targetPort: {{ .Values.web.service.name }}
-      protocol: TCP
-  selector:
-    app.kubernetes.io/name: {{ include "zabbix.name" . }}
-    app.kubernetes.io/instance: {{ .Values.web.name }}
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
   name: {{ .Values.srv.name }}
   labels:
-    app.kubernetes.io/name: {{ include "zabbix.name" . }}
     helm.sh/chart: {{ include "zabbix.chart" . }}
-    app.kubernetes.io/instance: {{ .Values.srv.service.name }}
+    app.kubernetes.io/name: {{ include "zabbix.name" . }}
+    app.kubernetes.io/instance: {{ .Values.srv.name }}
+    app.kubernetes.io/release: {{ .Release.name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.srv.service.type }}
@@ -62,4 +42,26 @@ spec:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
     app.kubernetes.io/instance: {{ .Values.srv.name }}
 
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.web.name }}
+  labels:
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/name: {{ include "zabbix.name" . }}
+    app.kubernetes.io/instance: {{ .Values.web.name }}
+    app.kubernetes.io/release: {{ .Release.name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.web.service.type }}
+  ports:
+    - name: {{ .Values.web.service.name }}
+      port: {{ .Values.web.service.servicePort }}
+      targetPort: {{ .Values.web.service.name }}
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: {{ include "zabbix.name" . }}
+    app.kubernetes.io/instance: {{ .Values.web.name }}
 
