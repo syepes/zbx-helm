@@ -58,10 +58,10 @@ spec:
       - name: data
       {{- if eq .Values.db.persistence.enabled true }}
         persistentVolumeClaim:
-          claimName: {{ .Values.db.persistence.existingClaim }}
+          claimName: {{ .Values.db.persistence.existingClaim | default (include "zabbix.name" .) }}
       {{- else }}
         emptyDir: {}
-      {{- end -}}
+      {{- end }}
 
       restartPolicy: Always
       imagePullSecrets:
@@ -81,7 +81,6 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-
 
 ---
 
