@@ -1,10 +1,11 @@
 {{- if .Values.web.ingress.enabled -}}
 {{- $fullName := include "zabbix.fullname" . -}}
+{{- $serviceName := .Values.web.service.name -}}
 {{- $ingressPaths := .Values.web.ingress.paths -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: { .Values.web.service.name }}
+  name: {{ $fullName }}
   labels:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
     helm.sh/chart: {{ include "zabbix.chart" . }}
@@ -23,7 +24,7 @@ spec:
 	{{- range $ingressPaths }}
           - path: {{ . }}
             backend:
-              serviceName: {{ .Values.web.service.name }}
+              serviceName: {{ $serviceName }}
               servicePort: http
 	{{- end }}
   {{- end }}
