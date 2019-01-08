@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "zabbix.fullname" . }}
+  name: {{ .Values.db.name }}
   labels:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
     helm.sh/chart: {{ include "zabbix.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.db.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "zabbix.name" . }}
@@ -29,6 +29,50 @@ spec:
           - name: PGSQL_PASS
             value: {{ .Values.db.pgsql.pass }}
 
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: gitlab-emea
+
+      resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.srv.name }}
+  labels:
+    app.kubernetes.io/name: {{ include "zabbix.name" . }}
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "zabbix.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "zabbix.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
         - name: {{ .Values.srv.name }}
           image: "{{ .Values.srv.image.repository }}:{{ .Values.srv.image.tag }}"
           imagePullPolicy: {{ .Values.srv.image.pullPolicy }}
@@ -54,6 +98,49 @@ spec:
           - name: PGSQL_PASS
             value: {{ .Values.db.pgsql.pass }}
 
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: gitlab-emea
+
+      resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.web.name }}
+  labels:
+    app.kubernetes.io/name: {{ include "zabbix.name" . }}
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "zabbix.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "zabbix.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
         - name: {{ .Values.web.name }}
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
           imagePullPolicy: {{ .Values.web.image.pullPolicy }}
@@ -101,3 +188,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+
