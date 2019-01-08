@@ -1,0 +1,17 @@
+appVersion: v1
+appVersion: "1.0"
+name: 0.2.0
+description: Zabbix deployment
+version: 0.2.0
+keywords:
+  - monitoring
+  - zabbix
+  - zbx
+home: https://www.zabbix.com/
+icon: https://assets.zabbix.com/img/logo/zabbix_logo_313x82.png
+sources:
+  - https://github.com/syepes/zbx-helm
+maintainers:
+  - name: syepes
+    email: syepes@gmail.com
+    url: https://github.com/syepes

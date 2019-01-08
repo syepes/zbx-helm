@@ -1,0 +1,81 @@
+web:
+  name: zbx-web
+  image:
+    repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-web
+    tag: latest
+    pullPolicy: Always
+
+  enabled: true
+  replicaCount: 2
+
+  service:
+    name: zbx-web
+    type: ClusterIP
+    servicePort: 80
+    ssl: true
+    # nodePort: 
+  ingress:
+    enabled: true
+    hosts:
+      - xip.io
+    annotations:
+
+srv:
+  name: zbx-srv
+  image:
+    repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-server
+    tag: latest
+    pullPolicy: Always
+
+  enabled: true
+  replicaCount: 1
+
+  service:
+    name: zbx-trapper
+    type: ClusterIP
+    servicePort: 10051
+
+db:
+  name: zbx-db
+  image:
+    repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-db-tsdb
+    tag: latest
+    pullPolicy: Always
+
+  replicaCount: 1
+
+  service:
+    name: zbx-db
+    type: ClusterIP
+    servicePort: 5432
+
+  pgsql:
+    user: "zabbix"
+    pass: "zabbix"
+  env:
+    ZBX_INITDATA: local
+    ZBX_PURGE_RAW: 3
+    ZBX_PURGE_TREND: 24
+
+## Create a kube-state-metrics deployment
+## ref: https://github.com/kubernetes/charts/tree/master/stable/kube-state-metrics
+deployKubeStateMetrics: false
+
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

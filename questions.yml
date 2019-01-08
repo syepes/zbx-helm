@@ -1,0 +1,91 @@
+questions:
+#image configurations
+- variable: defaultImage
+  default: "true"
+  description: "Use default Ubisoft Zabbix image or specify a custom one"
+  label: Use Default Ubisoft Zabbix Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: zbx-web.image.tag
+    default: "latest"
+    description: "Zabbix Web image Tag"
+    type: string
+    label: Zabbix Web Image Name
+  - variable: zbx-srv.image.tag
+    default: "latest"
+    description: "Zabbix Server image Tag"
+    type: string
+    label: Zabbix Server Image Name
+  - variable: zbx-db.image.tag
+    default: "latest"
+    description: "Zabbix DB image Tag"
+    type: string
+    label: Zabbix DB Image Name
+
+
+#web configurations
+- variable: zbx-web.replicaCount
+  default: 2
+  description: "Enter your Web Instances"
+  type: int
+  label: Web Instances
+  group: "Web Configuration"
+- variable: zbx-web.enabled
+  default: true
+  description: "Create a web service endpoint"
+  type: boolean
+  label: Create Service
+  group: "Web Configuration"
+  show_subquestion_if: true
+  subquestions:
+  - variable: zbx-web.service.type
+    default: "ClusterIP"
+    description: "Service type to create"
+    type: enum
+    options:
+      - "ClusterIP"
+      - "NodePort"
+      - "LoadBalancer"
+    label: Service Type
+
+#srv configurations
+- variable: zbx-srv.enabled
+  default: true
+  description: "Create a server service endpoint"
+  type: boolean
+  label: Create Service
+  group: "Server Configuration"
+  show_subquestion_if: true
+  subquestions:
+  - variable: zbx-srv.service.type
+    default: "ClusterIP"
+    description: "Service type to create"
+    type: enum
+    options:
+      - "ClusterIP"
+      - "NodePort"
+      - "LoadBalancer"
+    label: Service Type
+
+
+#db configurations
+- variable: service-db.enabled
+  default: false
+  description: "Create a DB service endpoint"
+  type: boolean
+  label: Create Service
+  group: "DB Configuration"
+  show_subquestion_if: true
+  subquestions:
+  - variable: service-db.serviceType
+    default: "ClusterIP"
+    description: "Service type to create"
+    type: enum
+    options:
+      - "ClusterIP"
+      - "NodePort"
+      - "LoadBalancer"
+    label: Service Type
+
