@@ -21,11 +21,11 @@ spec:
     - host: {{ . | quote }}
       http:
         paths:
-	{{- range $ingressPaths }}
+  {{- range $ingressPaths }}
           - path: {{ . }}
             backend:
               serviceName: {{ $serviceName }}
               servicePort: http
-	{{- end }}
+  {{- end }}
   {{- end }}
 {{- end }}

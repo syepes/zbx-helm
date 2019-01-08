@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
     helm.sh/chart: {{ include "zabbix.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Values.web.service.name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.web.service.type }}
@@ -16,7 +16,7 @@ spec:
       name: http
   selector:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Values.web.name }}
 
 ---
 
@@ -27,7 +27,7 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
     helm.sh/chart: {{ include "zabbix.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Values.srv.service.name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: {{ .Values.srv.service.type }}
@@ -38,6 +38,6 @@ spec:
       name: zbx-trapper
   selector:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Values.srv.name }}
 
 
