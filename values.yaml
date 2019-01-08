@@ -16,9 +16,11 @@ web:
     # nodePort: 
   ingress:
     enabled: true
+    paths: []
     hosts:
       - xip.io
     annotations:
+    tls:
 
 srv:
   name: zbx-srv
