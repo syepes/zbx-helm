@@ -54,14 +54,14 @@ spec:
           - name: ZBX_PURGE_TREND
             value: {{ .Values.db.env.trend | quote }}
 
-          volumes:
-          - name: data
-          {{- if .Values.db.persistence.enabled }}
-            persistentVolumeClaim:
-              claimName: {{ .Values.db.name }}
-          {{- else }}
-            emptyDir: {}
-          {{- end -}}
+      volumes:
+      - name: data
+      {{- if .Values.db.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.db.persistence.existingClaim | default (include "zabbix.fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}
 
       restartPolicy: Always
       imagePullSecrets:
