@@ -1,6 +1,6 @@
 appVersion: v1
 appVersion: "1.0"
-name: zbx-syf
+name: zbx-sas
 description: Zabbix deployment
 version: 0.2.0
 keywords:

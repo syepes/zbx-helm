@@ -1,0 +1,25 @@
+{{- if and .Values.db.persistence.enabled (not .Values.db.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.db.name }}
+  labels:
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/name: {{ include "zabbix.name" . }}
+    app.kubernetes.io/instance: {{ .Values.web.name }}
+    app.kubernetes.io/release: {{ .Release.name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  accessModes:
+    - {{ .Values.db.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.db.persistence.size | quote }}
+{{- if .Values.db.persistence.storageClassName }}
+{{- if (eq "" .Values.db.persistence.storageClassName) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.db.persistence.storageClassName }}"
+{{- end }}
+{{- end }}
+{{- end }}

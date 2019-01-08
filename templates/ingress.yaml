@@ -6,7 +6,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $serviceName }}
   labels:
     helm.sh/chart: {{ include "zabbix.chart" . }}
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
@@ -31,3 +31,4 @@ spec:
   {{- end }}
   {{- end }}
 {{- end }}
+

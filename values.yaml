@@ -1,5 +1,60 @@
+db:
+  name: zabbix-db
+  image:
+    repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-db-tsdb
+    tag: latest
+    pullPolicy: Always
+
+  replicaCount: 1
+  service:
+    name: postgres
+    type: ClusterIP
+    servicePort: 5432
+
+  resources:
+    requests:
+      memory: "2Gi"
+    limits:
+      memory: "8Gi"
+
+  persistence:
+    enabled: true
+    size: 8Gi
+    existingClaim:
+    accessMode: ReadWriteOnce
+    storageClassName: zone1
+
+  pgsql:
+    user: "zabbix"
+    pass: "zabbix"
+
+  env:
+    initdata: local
+    raw: 3
+    trend: 24
+
+srv:
+  name: zabbix-srv
+  image:
+    repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-server
+    tag: 4.0.3-json
+    pullPolicy: Always
+
+  enabled: true
+  replicaCount: 1
+  service:
+    name: zbx-trapper
+    type: ClusterIP
+    servicePort: 10051
+
+  resources:
+    requests:
+      memory: "512Mi"
+    limits:
+      memory: "2Gi"
+
 web:
-  name: zbx-web
+  name: zabbix-web
   image:
     repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-web
     tag: latest
@@ -7,13 +62,19 @@ web:
 
   enabled: true
   replicaCount: 2
-
   service:
     name: http
     type: ClusterIP
     servicePort: 80
-    ssl: true
-    # nodePort: 
+    ssl: false
+    # nodePort:
+
+  resources:
+    requests:
+      memory: "256Mi"
+    limits:
+      memory: "2Gi"
+
   ingress:
     enabled: true
     paths:
@@ -23,47 +84,9 @@ web:
     annotations:
     tls:
 
-srv:
-  name: zbx-srv
-  image:
-    repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-server
-    tag: latest
-    pullPolicy: Always
-
-  enabled: true
-  replicaCount: 1
-
-  service:
-    name: zbx-trapper
-    type: ClusterIP
-    servicePort: 10051
-
-db:
-  name: zbx-db
-  image:
-    repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-db-tsdb
-    tag: latest
-    pullPolicy: Always
-
-  replicaCount: 1
-
-  service:
-    name: postgres
-    type: ClusterIP
-    servicePort: 5432
-
-  pgsql:
-    user: "zabbix"
-    pass: "zabbix"
-  env:
-    initdata: local
-    raw: 3
-    trend: 24
-
 ## Create a kube-state-metrics deployment
 ## ref: https://github.com/kubernetes/charts/tree/master/stable/kube-state-metrics
-deployKubeStateMetrics: false
-
+deployKubeStateMetrics: true
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

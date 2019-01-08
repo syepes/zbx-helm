@@ -34,11 +34,13 @@ spec:
             tcpSocket:
               port: {{ .Values.db.service.servicePort }}
             initialDelaySeconds: 30
+            timeoutSeconds: 2
             periodSeconds: 5
           readinessProbe:
             tcpSocket:
               port: {{ .Values.db.service.servicePort }}
             intialDelaySeconds: 30
+            timeoutSeconds: 2
             periodSeconds: 5
           env:
           - name: PGSQL_USER
@@ -52,21 +54,30 @@ spec:
           - name: ZBX_PURGE_TREND
             value: {{ .Values.db.env.trend | quote }}
 
+          volumes:
+          - name: data
+          {{- if .Values.db.persistence.enabled }}
+            persistentVolumeClaim:
+              claimName: {{ .Values.db.persistence.existingClaim | default (include "zabbix.fullname" .) }}
+          {{- else }}
+            emptyDir: {}
+          {{- end -}}
+
       restartPolicy: Always
       imagePullSecrets:
       - name: gitlab-emea
 
       resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.db.resources | nindent 12 }}
+      {{- with .Values.db.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.affinity }}
+    {{- with .Values.db.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.tolerations }}
+    {{- with .Values.db.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
@@ -106,16 +117,18 @@ spec:
           - name: {{ .Values.srv.service.name }}
             containerPort: {{ .Values.srv.service.servicePort }}
             protocol: TCP
-            #          livenessProbe:
-            #            tcpSocket:
-            #              port: {{ .Values.srv.service.servicePort }}
-            #            initialDelaySeconds: 10
-            #            periodSeconds: 5
-            #          readinessProbe:
-            #            tcpSocket:
-            #              port: {{ .Values.srv.service.servicePort }}
-            #            intialDelaySeconds: 10
-            #            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.srv.service.servicePort }}
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.srv.service.servicePort }}
+            intialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
           env:
           - name: PGSQL_HOST
             value: {{ .Values.db.name }}
@@ -129,16 +142,16 @@ spec:
       - name: gitlab-emea
 
       resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.srv.resources | nindent 12 }}
+      {{- with .Values.srv.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.affinity }}
+    {{- with .Values.srv.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.tolerations }}
+    {{- with .Values.srv.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
@@ -180,14 +193,16 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: {{ .Values.web.service.name }}
+              port: {{ .Values.web.service.servicePort }}
             initialDelaySeconds: 10
+            timeoutSeconds: 2
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /
-              port: {{ .Values.web.service.name }}
+              port: {{ .Values.web.service.servicePort }}
             intialDelaySeconds: 10
+            timeoutSeconds: 2
             periodSeconds: 5
           env:
           - name: ZBX_SRV_HOST
@@ -204,16 +219,16 @@ spec:
       - name: gitlab-emea
 
       resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.web.resources | nindent 12 }}
+      {{- with .Values.web.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.affinity }}
+    {{- with .Values.web.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.tolerations }}
+    {{- with .Values.web.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}

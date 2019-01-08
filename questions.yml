@@ -89,3 +89,23 @@ questions:
       - "LoadBalancer"
     label: Service Type
 
+- variable: db.persistence.enabled
+  default: true
+  description: "Enable DB persistence using PVC"
+  type: boolean
+  required: true
+  label: Persistent Volume Enabled
+  show_subquestion_if: true
+  group: "Persistent Volume"
+  subquestions:
+  - variable: db.persistence.size
+    default: "8Gi"
+    description: "Volume Size"
+    type: string
+    label: Volume Size
+    required: true
+  - variable: db.persistence.storageClassName
+    default: "zone1"
+    description: "If undefined or null, uses the default StorageClassName. Defaults to null."
+    type: storageclass
+    label: Default storageClassName
