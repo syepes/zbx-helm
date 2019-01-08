@@ -39,11 +39,11 @@ spec:
             periodSeconds: 5
           env:
           - name: PGSQL_USER
-            value: {{ .Values.db.pgsql.user | quote }}
+            value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
             value: {{ .Values.db.pgsql.pass | quote }}
           - name: ZBX_INITDATA
-            value: {{ .Values.db.env.initdata | quote }}
+            value: {{ .Values.db.env.initdata }}
           - name: ZBX_PURGE_RAW
             value: {{ .Values.db.env.raw }}
           - name: ZBX_PURGE_TREND
@@ -112,9 +112,9 @@ spec:
             periodSeconds: 5
           env:
           - name: PGSQL_HOST
-            value: {{ .Values.db.name | quote }}
+            value: {{ .Values.db.name }}
           - name: PGSQL_USER
-            value: {{ .Values.db.pgsql.user | quote }}
+            value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
             value: {{ .Values.db.pgsql.pass | quote }}
 
@@ -182,11 +182,11 @@ spec:
             periodSeconds: 5
           env:
           - name: ZBX_SRV_HOST
-            value: {{ .Values.srv.name | quote }}
+            value: {{ .Values.srv.name }}
           - name: PGSQL_HOST
-            value: {{ .Values.db.name | quote }}
+            value: {{ .Values.db.name }}
           - name: PGSQL_USER
-            value: {{ .Values.db.pgsql.user | quote }}
+            value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
             value: {{ .Values.db.pgsql.pass | quote }}
 
