@@ -45,9 +45,9 @@ spec:
           - name: ZBX_INITDATA
             value: {{ .Values.db.env.initdata }}
           - name: ZBX_PURGE_RAW
-            value: {{ .Values.db.env.raw }}
+            value: {{ .Values.db.env.raw | quote }}
           - name: ZBX_PURGE_TREND
-            value: {{ .Values.db.env.trend }}
+            value: {{ .Values.db.env.trend | quote }}
 
       restartPolicy: Always
       imagePullSecrets:
