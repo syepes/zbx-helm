@@ -9,7 +9,7 @@ web:
   replicaCount: 2
 
   service:
-    name: zbx-web
+    name: http
     type: ClusterIP
     servicePort: 80
     ssl: true
@@ -48,7 +48,7 @@ db:
   replicaCount: 1
 
   service:
-    name: zbx-db
+    name: postgres
     type: ClusterIP
     servicePort: 5432
 
@@ -56,9 +56,9 @@ db:
     user: "zabbix"
     pass: "zabbix"
   env:
-    zbx_initdata: local
-    ZBX_PURGE_RAW: 3
-    ZBX_PURGE_TREND: 24
+    initdata: local
+    raw: 3
+    trend: 24
 
 ## Create a kube-state-metrics deployment
 ## ref: https://github.com/kubernetes/charts/tree/master/stable/kube-state-metrics

@@ -39,11 +39,11 @@ spec:
             periodSeconds: 5
           env:
           - name: PGSQL_USER
-            value: {{ .Values.db.pgsql.user }}
+            value: {{ .Values.db.pgsql.user | quote }}
           - name: PGSQL_PASS
-            value: {{ .Values.db.pgsql.pass }}
+            value: {{ .Values.db.pgsql.pass | quote }}
           - name: ZBX_INITDATA
-            value: {{ .Values.db.env.initdata }}
+            value: {{ .Values.db.env.initdata | quote }}
           - name: ZBX_PURGE_RAW
             value: {{ .Values.db.env.raw }}
           - name: ZBX_PURGE_TREND
@@ -112,11 +112,11 @@ spec:
             periodSeconds: 5
           env:
           - name: PGSQL_HOST
-            value: {{ .Values.db.name }}
+            value: {{ .Values.db.name | quote }}
           - name: PGSQL_USER
-            value: {{ .Values.db.pgsql.user }}
+            value: {{ .Values.db.pgsql.user | quote }}
           - name: PGSQL_PASS
-            value: {{ .Values.db.pgsql.pass }}
+            value: {{ .Values.db.pgsql.pass | quote }}
 
       restartPolicy: Always
       imagePullSecrets:
@@ -165,30 +165,30 @@ spec:
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
           imagePullPolicy: {{ .Values.web.image.pullPolicy }}
           ports:
-          - name: http
-            containerPort: {{ .Values.srv.service.servicePort }}
+          - name: {{ .Values.web.service.name }}
+            containerPort: {{ .Values.web.service.servicePort }}
             protocol: TCP
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: {{ .Values.web.service.name }}
             initialDelaySeconds: 10
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: {{ .Values.web.service.name }}
             intialDelaySeconds: 10
             periodSeconds: 5
           env:
           - name: ZBX_SRV_HOST
-            value: {{ .Values.srv.name }}
+            value: {{ .Values.srv.name | quote }}
           - name: PGSQL_HOST
-            value: {{ .Values.db.name }}
+            value: {{ .Values.db.name | quote }}
           - name: PGSQL_USER
-            value: {{ .Values.db.pgsql.user }}
+            value: {{ .Values.db.pgsql.user | quote }}
           - name: PGSQL_PASS
-            value: {{ .Values.db.pgsql.pass }}
+            value: {{ .Values.db.pgsql.pass | quote }}
 
       restartPolicy: Always
       imagePullSecrets:
