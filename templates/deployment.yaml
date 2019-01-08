@@ -83,6 +83,10 @@ spec:
           - name: ZBX_SRV_HOST
             values: {{ .Values.srv.name }}
 
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: gitlab-emea
+
       resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
