@@ -23,6 +23,20 @@ spec:
         - name: {{ .Values.db.name }}
           image: "{{ .Values.db.image.repository }}:{{ .Values.db.image.tag }}"
           imagePullPolicy: {{ .Values.db.image.pullPolicy }}
+          ports:
+          - name: {{ .Values.db.service.name }}
+            containerPort: {{ .Values.db.service.servicePort }}
+            protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.db.service.servicePort }}
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.db.service.servicePort }}
+            intialDelaySeconds: 30
+            periodSeconds: 5
           env:
           - name: PGSQL_USER
             value: {{ .Values.db.pgsql.user }}
@@ -77,7 +91,7 @@ spec:
           image: "{{ .Values.srv.image.repository }}:{{ .Values.srv.image.tag }}"
           imagePullPolicy: {{ .Values.srv.image.pullPolicy }}
           ports:
-          - name: zbx-srv
+          - name: {{ .Values.srv.service.name }}
             containerPort: {{ .Values.srv.service.servicePort }}
             protocol: TCP
           livenessProbe:
@@ -92,7 +106,7 @@ spec:
             periodSeconds: 5
           env:
           - name: PGSQL_HOST
-            value: {{ .Values.db.hostname }}
+            value: {{ .Values.db.name }}
           - name: PGSQL_USER
             value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
@@ -162,7 +176,7 @@ spec:
             periodSeconds: 5
           env:
           - name: PGSQL_HOST
-            value: {{ .Values.db.hostname }}
+            value: {{ .Values.db.name }}
           - name: PGSQL_USER
             value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
