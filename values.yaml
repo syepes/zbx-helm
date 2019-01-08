@@ -56,7 +56,7 @@ db:
     user: "zabbix"
     pass: "zabbix"
   env:
-    ZBX_INITDATA: local
+    zbx_initdata: local
     ZBX_PURGE_RAW: 3
     ZBX_PURGE_TREND: 24
 
