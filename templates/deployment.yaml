@@ -60,6 +60,11 @@ spec:
             mountPath: /var/lib/postgresql/data
 
       volumes:
+      {{- if .Values.db.configurationFiles }}
+      - name: config-storage
+        configMap:
+          name: {{ .Values.db.name }}-config
+      {{- end }}
       - name: zbx-db-storage
       {{- if .Values.db.persistence.enabled }}
         persistentVolumeClaim:
@@ -140,6 +145,18 @@ spec:
             value: {{ .Values.db.pgsql.pass }}
           resources:
             {{- toYaml .Values.srv.resources | nindent 12 }}
+          volumeMounts:
+          {{- if .Values.srv.configurationFiles }}
+          - name: config-storage
+            mountPath: /etc/zabbix/
+          {{- end }}
+
+      {{- if .Values.srv.configurationFiles }}
+      volumes:
+      - name: config-storage
+        configMap:
+          name: {{ .Values.srv.name }}-config
+      {{- end }}
 
       restartPolicy: Always
       imagePullSecrets:

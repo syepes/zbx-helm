@@ -1,0 +1,17 @@
+{{- if .Values.srv.configurationFiles }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.srv.name }}
+  labels:
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/name: {{ include "zabbix.name" . }}
+    app.kubernetes.io/instance: {{ .Values.srv.name }}
+    app.kubernetes.io/release: {{ .Release.name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+{{- range $key, $val := .Values.srv.configurationFiles }}
+  {{ $key }}: |-
+{{ $val | indent 4}}
+{{- end }}
+{{- end -}}
