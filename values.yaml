@@ -44,7 +44,7 @@ srv:
   replicaCount: 1
   service:
     name: zbx-trapper
-    type: ClusterIP
+    type: NodePort
     servicePort: 10051
 
   resources:

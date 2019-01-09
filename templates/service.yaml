@@ -36,7 +36,6 @@ spec:
   ports:
     - name: {{ .Values.srv.service.name }}
       port: {{ .Values.srv.service.servicePort }}
-      targetPort: {{ .Values.srv.service.name }}
       protocol: TCP
   selector:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
@@ -64,4 +63,3 @@ spec:
   selector:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
     app.kubernetes.io/instance: {{ .Values.web.name }}
-

@@ -29,6 +29,7 @@ spec:
           ports:
           - name: {{ .Values.db.service.name }}
             containerPort: {{ .Values.db.service.servicePort }}
+            nodePort: {{ .Values.db.service.servicePort }}
             protocol: TCP
           livenessProbe:
             tcpSocket:
@@ -217,7 +218,7 @@ spec:
             value: {{ .Values.db.pgsql.pass }}
           resources:
             {{- toYaml .Values.web.resources | nindent 12 }}
- 
+
       restartPolicy: Always
       imagePullSecrets:
       - name: gitlab-emea
@@ -234,4 +235,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-
