@@ -155,7 +155,7 @@ spec:
       volumes:
       - name: config-storage
         configMap:
-          name: {{ .Values.srv.name }}-config
+          name: {{ .Values.srv.name }}
       {{- end }}
 
       restartPolicy: Always
