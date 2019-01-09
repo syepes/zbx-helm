@@ -27,7 +27,7 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: {{ $serviceName }}
-              port: {{ $servicePort }}
+              servicePort: {{ $servicePort }}
   {{- end }}
   {{- end }}
 {{- end }}

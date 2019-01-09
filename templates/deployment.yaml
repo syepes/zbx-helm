@@ -222,7 +222,7 @@ spec:
       imagePullSecrets:
       - name: gitlab-emea
 
-     {{- with .Values.web.nodeSelector }}
+    {{- with .Values.web.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
