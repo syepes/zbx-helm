@@ -149,6 +149,7 @@ spec:
           {{- if .Values.srv.configurationFiles }}
           - name: config-storage
             mountPath: /etc/zabbix/
+            readOnly: false
           {{- end }}
 
       {{- if .Values.srv.configurationFiles }}
