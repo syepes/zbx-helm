@@ -26,7 +26,7 @@ db:
     storageClassName: zone1
 
   # Custom PostgreSQL Server configuration files used to override default settings
-  configurationX:
+  configuration:
     global:
     files:
       pg_hba.conf: |-
