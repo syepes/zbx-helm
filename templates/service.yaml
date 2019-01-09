@@ -13,7 +13,6 @@ spec:
   ports:
     - name: {{ .Values.db.service.name }}
       port: {{ .Values.db.service.servicePort }}
-      targetPort: {{ .Values.db.service.name }}
       protocol: TCP
   selector:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}

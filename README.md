@@ -9,5 +9,5 @@ The following table lists the configurable parameters of the Zabbix chart and th
 
 Parameter | Description | Default
 --------- | ----------- | -------
-`alertmanager.enabled` | If true, create alertmanager | `true`
-`alertmanager.name` | alertmanager container name | `alertmanager`
+`zbx-srv.enabled` | Create L7 Ingress | `true`
+`db.persistence.enabled` | Create DB persistence volume | `true`

@@ -29,7 +29,6 @@ spec:
           ports:
           - name: {{ .Values.db.service.name }}
             containerPort: {{ .Values.db.service.servicePort }}
-            nodePort: {{ .Values.db.service.servicePort }}
             protocol: TCP
           livenessProbe:
             tcpSocket:

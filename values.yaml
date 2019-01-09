@@ -8,7 +8,7 @@ db:
   replicaCount: 1
   service:
     name: postgres
-    type: ClusterIP
+    type: NodePort
     servicePort: 5432
 
   resources:
