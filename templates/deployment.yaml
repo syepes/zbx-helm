@@ -53,9 +53,12 @@ spec:
             value: {{ .Values.db.env.raw | quote }}
           - name: ZBX_PURGE_TREND
             value: {{ .Values.db.env.trend | quote }}
+          volumeMounts:
+          - name: zbx-db-storage
+            mountPath: /var/lib/postgresql/data
 
       volumes:
-      - name: data
+      - name: zbx-db-storage
       {{- if eq .Values.db.persistence.enabled true }}
         persistentVolumeClaim:
           claimName: {{ .Values.db.persistence.existingClaim | default (include "zabbix.name" .) }}
