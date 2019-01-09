@@ -1,4 +1,4 @@
-{{- if .Values.db.configuration }}
+{{- if .Values.db.configuration -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -91,7 +91,7 @@ data:
 
 ---
 
-{{- if .Values.srv.configuration }}
+{{- if .Values.srv.configuration -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
