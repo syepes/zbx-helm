@@ -58,18 +58,16 @@ spec:
           volumeMounts:
           - name: zbx-db-storage
             mountPath: /var/lib/postgresql/data
+          {{- if .Values.db.configuration }}
+          - name: config-storage
+            mountPath: /var/lib/postgresql/data/11/postgresql.conf
+            subPath: postgresql.conf
+          - name: config-storage
+            mountPath: /var/lib/postgresql/data/11/pg_hba.conf
+            subPath: pg_hba.conf
+          {{- end }}
 
       volumes:
-      {{- if .Values.db.configuration }}
-      - name: postgresql-config
-        mountPath: /var/lib/postgresql/data/11/postgresql.conf
-        subPath: postgresql.conf
-        readOnly: false
-      - name: pg-hba-config
-        mountPath: /var/lib/postgresql/data/11/pg_hba.conf
-        subPath: pg_hba.conf
-        readOnly: false
-      {{- end }}
       {{- if .Values.db.configuration }}
       - name: config-storage
         configMap:
