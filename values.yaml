@@ -9,7 +9,7 @@ db:
   service:
     name: postgres
     type: NodePort
-    servicePort: 5432
+    port: 5432
 
   resources:
     requests:
@@ -45,7 +45,7 @@ srv:
   service:
     name: zbx-trapper
     type: NodePort
-    servicePort: 10051
+    port: 10051
 
   resources:
     requests:
@@ -65,7 +65,7 @@ web:
   service:
     name: http
     type: ClusterIP
-    servicePort: 80
+    port: 80
     ssl: false
     # nodePort:
 

@@ -12,7 +12,8 @@ spec:
   type: {{ .Values.db.service.type }}
   ports:
     - name: {{ .Values.db.service.name }}
-      port: {{ .Values.db.service.servicePort }}
+      port: {{ .Values.db.service.port }}
+      targetPort: {{ .Values.db.service.port }}
       protocol: TCP
   selector:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
@@ -34,7 +35,7 @@ spec:
   type: {{ .Values.srv.service.type }}
   ports:
     - name: {{ .Values.srv.service.name }}
-      port: {{ .Values.srv.service.servicePort }}
+      port: {{ .Values.srv.service.port }}
       protocol: TCP
   selector:
     app.kubernetes.io/name: {{ include "zabbix.name" . }}
@@ -56,7 +57,7 @@ spec:
   type: {{ .Values.web.service.type }}
   ports:
     - name: {{ .Values.web.service.name }}
-      port: {{ .Values.web.service.servicePort }}
+      port: {{ .Values.web.service.port }}
       targetPort: {{ .Values.web.service.name }}
       protocol: TCP
   selector:

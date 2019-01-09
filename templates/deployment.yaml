@@ -28,17 +28,17 @@ spec:
           imagePullPolicy: {{ .Values.db.image.pullPolicy }}
           ports:
           - name: {{ .Values.db.service.name }}
-            containerPort: {{ .Values.db.service.servicePort }}
+            containerPort: {{ .Values.db.service.port }}
             protocol: TCP
           livenessProbe:
             tcpSocket:
-              port: {{ .Values.db.service.servicePort }}
+              port: {{ .Values.db.service.port }}
             initialDelaySeconds: 30
             timeoutSeconds: 2
             periodSeconds: 5
           readinessProbe:
             tcpSocket:
-              port: {{ .Values.db.service.servicePort }}
+              port: {{ .Values.db.service.port }}
             intialDelaySeconds: 30
             timeoutSeconds: 2
             periodSeconds: 5
@@ -117,17 +117,17 @@ spec:
           imagePullPolicy: {{ .Values.srv.image.pullPolicy }}
           ports:
           - name: {{ .Values.srv.service.name }}
-            containerPort: {{ .Values.srv.service.servicePort }}
+            containerPort: {{ .Values.srv.service.port }}
             protocol: TCP
           livenessProbe:
             tcpSocket:
-              port: {{ .Values.srv.service.servicePort }}
+              port: {{ .Values.srv.service.port }}
             initialDelaySeconds: 10
             timeoutSeconds: 2
             periodSeconds: 5
           readinessProbe:
             tcpSocket:
-              port: {{ .Values.srv.service.servicePort }}
+              port: {{ .Values.srv.service.port }}
             intialDelaySeconds: 10
             timeoutSeconds: 2
             periodSeconds: 5
@@ -190,19 +190,19 @@ spec:
           imagePullPolicy: {{ .Values.web.image.pullPolicy }}
           ports:
           - name: {{ .Values.web.service.name }}
-            containerPort: {{ .Values.web.service.servicePort }}
+            containerPort: {{ .Values.web.service.port }}
             protocol: TCP
           livenessProbe:
             httpGet:
               path: /
-              port: {{ .Values.web.service.servicePort }}
+              port: {{ .Values.web.service.port }}
             initialDelaySeconds: 10
             timeoutSeconds: 2
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /
-              port: {{ .Values.web.service.servicePort }}
+              port: {{ .Values.web.service.port }}
             intialDelaySeconds: 10
             timeoutSeconds: 2
             periodSeconds: 5
