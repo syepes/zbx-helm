@@ -59,9 +59,9 @@ spec:
 
       volumes:
       - name: zbx-db-storage
-      {{- if eq .Values.db.persistence.enabled true }}
+      {{- if .Values.db.persistence.enabled }}
         persistentVolumeClaim:
-          claimName: {{ .Values.db.persistence.existingClaim | default (include "zabbix.name" .) }}
+          claimName: {{ .Values.db.persistence.existingClaim | default (.Values.db.name) }}
       {{- else }}
         emptyDir: {}
       {{- end }}
