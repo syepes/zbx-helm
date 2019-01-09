@@ -89,6 +89,8 @@ data:
     default_text_search_config = 'pg_catalog.english'
 {{- end -}}
 
+---
+
 {{- if .Values.srv.configuration }}
 apiVersion: v1
 kind: ConfigMap
