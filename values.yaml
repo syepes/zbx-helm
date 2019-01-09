@@ -13,9 +13,9 @@ db:
 
   resources:
     requests:
-      memory: "2Gi"
+      memory: 2Gi
     limits:
-      memory: "8Gi"
+      memory: 8Gi
 
   persistence:
     enabled: true
@@ -49,9 +49,9 @@ srv:
 
   resources:
     requests:
-      memory: "512Mi"
+      memory: 512Mi
     limits:
-      memory: "2Gi"
+      memory: 2Gi
 
 web:
   name: zabbix-web
@@ -71,9 +71,9 @@ web:
 
   resources:
     requests:
-      memory: "256Mi"
+      memory: 256Mi
     limits:
-      memory: "2Gi"
+      memory: 2Gi
 
   ingress:
     enabled: true

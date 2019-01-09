@@ -53,6 +53,8 @@ spec:
             value: {{ .Values.db.env.raw | quote }}
           - name: ZBX_PURGE_TREND
             value: {{ .Values.db.env.trend | quote }}
+          resources:
+            {{- toYaml .Values.db.resources | nindent 12 }}
           volumeMounts:
           - name: zbx-db-storage
             mountPath: /var/lib/postgresql/data
@@ -70,8 +72,6 @@ spec:
       imagePullSecrets:
       - name: gitlab-emea
 
-      resources:
-            {{- toYaml .Values.db.resources | nindent 12 }}
       {{- with .Values.db.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -138,13 +138,13 @@ spec:
             value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
             value: {{ .Values.db.pgsql.pass }}
+          resources:
+            {{- toYaml .Values.srv.resources | nindent 12 }}
 
       restartPolicy: Always
       imagePullSecrets:
       - name: gitlab-emea
 
-      resources:
-            {{- toYaml .Values.srv.resources | nindent 12 }}
       {{- with .Values.srv.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -215,14 +215,14 @@ spec:
             value: {{ .Values.db.pgsql.user }}
           - name: PGSQL_PASS
             value: {{ .Values.db.pgsql.pass }}
-
+          resources:
+            {{- toYaml .Values.web.resources | nindent 12 }}
+ 
       restartPolicy: Always
       imagePullSecrets:
       - name: gitlab-emea
 
-      resources:
-            {{- toYaml .Values.web.resources | nindent 12 }}
-      {{- with .Values.web.nodeSelector }}
+     {{- with .Values.web.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
