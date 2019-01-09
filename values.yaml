@@ -55,63 +55,10 @@ srv:
       memory: 2Gi
 
   # Custom Zabbix Server configuration files used to override default settings
-  configurationFiles:
-    zabbix_server.conf: |-
-      # Main
-      ListenPort=10051
-      LogType=system
-      LogFile=/var/log/zabbix/zabbix_server.log
-      LogFileSize=10
-      DebugLevel=3
-      PidFile=/var/run/zabbix/zabbix_server.pid
-
-      # Database
-      DBHost={{ .Values.srv.name }}
-      DBName=zabbix
-      DBUser={{ .Values.db.pgsql.user }}
-      DBPassword={{ .Values.db.pgsql.pass }}
-      DBPort={{ .Values.db.service.port }}
-
-      # Processes
-      StartPollers=30
-      StartIPMIPollers=10
-      StartPollersUnreachable=20
-      StartTrappers=60
-      StartPingers=20
-      StartDiscoverers=3
-      StartHTTPPollers=5
-      StartTimers=10
-      StartEscalators=3
-      # StartProxyPollers=1
-      # ProxyConfigFrequency=3600
-      # ProxyDataFrequency=1
-      # JavaGateway=
-      # JavaGatewayPort=10052
-      # StartJavaPollers=0
-      #StartVMwareCollectors=4
-
-      # Tuning
-      CacheSize=3G
-      CacheUpdateFrequency=120
-      StartDBSyncers=6
-      HistoryCacheSize=512M
-      HistoryIndexCacheSize=128M
-      TrendCacheSize=512M
-      ValueCacheSize=512M
-      #VMwareCacheSize=128M
-      Timeout=15
-      TrapperTimeout=300
-      UnreachablePeriod=45
-      UnavailableDelay=60
-      UnreachableDelay=15
-      LogSlowQueries=3000
-
-      # Paths
-      AlertScriptsPath=/usr/lib/zabbix/alertscripts
-      ExternalScripts=/usr/lib/zabbix/externalscripts
-      Include=/etc/zabbix/zabbix_server.conf.d/*.conf
-      LoadModulePath=/usr/lib/zabbix/modules
-      FpingLocation=/usr/sbin/fping
+  configuration:
+    global:
+      CacheSize: 3G
+    files:
 
 
 web:

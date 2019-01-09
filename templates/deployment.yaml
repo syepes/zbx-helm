@@ -60,7 +60,7 @@ spec:
             mountPath: /var/lib/postgresql/data
 
       volumes:
-      {{- if .Values.db.configurationFiles }}
+      {{- if .Values.db.configuration }}
       - name: config-storage
         configMap:
           name: {{ .Values.db.name }}
@@ -146,14 +146,14 @@ spec:
           resources:
             {{- toYaml .Values.srv.resources | nindent 12 }}
           volumeMounts:
-          {{- if .Values.srv.configurationFiles }}
+          {{- if .Values.srv.configuration }}
           - name: config-storage
             mountPath: /etc/zabbix/zabbix_server.conf
             subPath: zabbix_server.conf
             readOnly: false
           {{- end }}
 
-      {{- if .Values.srv.configurationFiles }}
+      {{- if .Values.srv.configuration }}
       volumes:
       - name: config-storage
         configMap:
