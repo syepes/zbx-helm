@@ -148,7 +148,8 @@ spec:
           volumeMounts:
           {{- if .Values.srv.configurationFiles }}
           - name: config-storage
-            mountPath: /etc/zabbix/
+            mountPath: /etc/zabbix/zabbix_server.conf
+            subPath: zabbix_server.conf
             readOnly: false
           {{- end }}
 
