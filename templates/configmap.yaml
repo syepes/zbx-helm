@@ -1,78 +1,5 @@
-{{- if .Values.srv.configuration -}}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Values.srv.name }}
-  labels:
-    helm.sh/chart: {{ include "zabbix.chart" . }}
-    app.kubernetes.io/name: {{ include "zabbix.name" . }}
-    app.kubernetes.io/instance: {{ .Values.srv.name }}
-    app.kubernetes.io/release: {{ .Release.name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-data:
-{{- if .Values.srv.configuration.files }}
-{{- range $key, $val := .Values.srv.configuration.files }}
-  {{ $key }}: |-
-{{ $val | indent 4}}
-{{- end }}
-{{- end }}
-  zabbix_server.conf: |-
-    # Main
-    ListenPort={{ .Values.srv.service.port }}
-    LogType=system
-    LogFile=/var/log/zabbix/zabbix_server.log
-    LogFileSize=10
-    DebugLevel=3
-    PidFile=/var/run/zabbix/zabbix_server.pid
-    # Database
-    DBHost={{ .Values.srv.name }}
-    DBName=zabbix
-    DBUser={{ .Values.db.pgsql.user }}
-    DBPassword={{ .Values.db.pgsql.pass }}
-    DBPort={{ .Values.db.service.port }}
-    # Processes
-    StartPollers=30
-    StartIPMIPollers=10
-    StartPollersUnreachable=20
-    StartTrappers=60
-    StartPingers=20
-    StartDiscoverers=3
-    StartHTTPPollers=5
-    StartTimers=10
-    StartEscalators=3
-    # StartProxyPollers=1
-    # ProxyConfigFrequency=3600
-    # ProxyDataFrequency=1
-    # JavaGateway=
-    # JavaGatewayPort=10052
-    # StartJavaPollers=0
-    #StartVMwareCollectors=4
-    # Tuning
-    CacheSize={{ .Values.srv.configuration.global.CacheSize }}
-    CacheUpdateFrequency=120
-    StartDBSyncers=6
-    HistoryCacheSize=512M
-    HistoryIndexCacheSize=128M
-    TrendCacheSize=512M
-    ValueCacheSize=512M
-    #VMwareCacheSize=128M
-    Timeout=15
-    TrapperTimeout=300
-    UnreachablePeriod=45
-    UnavailableDelay=60
-    UnreachableDelay=15
-    LogSlowQueries=3000
-    # Paths
-    AlertScriptsPath=/usr/lib/zabbix/alertscripts
-    ExternalScripts=/usr/lib/zabbix/externalscripts
-    Include=/etc/zabbix/zabbix_server.conf.d/*.conf
-    LoadModulePath=/usr/lib/zabbix/modules
-    FpingLocation=/usr/sbin/fping
-{{- end -}}
-
+{{- if .Values.db.configuration }}
 ---
-
-{{- if .Values.db.configuration -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -161,4 +88,77 @@ data:
     lc_numeric = 'en_US.UTF-8'
     lc_time = 'en_US.UTF-8'
     default_text_search_config = 'pg_catalog.english'
+{{- end }}
+
+{{- if .Values.srv.configuration }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.srv.name }}
+  labels:
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/name: {{ include "zabbix.name" . }}
+    app.kubernetes.io/instance: {{ .Values.srv.name }}
+    app.kubernetes.io/release: {{ .Release.name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+{{- if .Values.srv.configuration.files }}
+{{- range $key, $val := .Values.srv.configuration.files }}
+  {{ $key }}: |-
+{{ $val | indent 4}}
+{{- end }}
+{{- end }}
+  zabbix_server.conf: |-
+    # Main
+    ListenPort={{ .Values.srv.service.port }}
+    LogType=system
+    LogFile=/var/log/zabbix/zabbix_server.log
+    LogFileSize=10
+    DebugLevel=3
+    PidFile=/var/run/zabbix/zabbix_server.pid
+    # Database
+    DBHost={{ .Values.srv.name }}
+    DBName=zabbix
+    DBUser={{ .Values.db.pgsql.user }}
+    DBPassword={{ .Values.db.pgsql.pass }}
+    DBPort={{ .Values.db.service.port }}
+    # Processes
+    StartPollers=30
+    StartIPMIPollers=10
+    StartPollersUnreachable=20
+    StartTrappers=60
+    StartPingers=20
+    StartDiscoverers=3
+    StartHTTPPollers=5
+    StartTimers=10
+    StartEscalators=3
+    # StartProxyPollers=1
+    # ProxyConfigFrequency=3600
+    # ProxyDataFrequency=1
+    # JavaGateway=
+    # JavaGatewayPort=10052
+    # StartJavaPollers=0
+    #StartVMwareCollectors=4
+    # Tuning
+    CacheSize={{ .Values.srv.configuration.global.CacheSize }}
+    CacheUpdateFrequency=120
+    StartDBSyncers=6
+    HistoryCacheSize=512M
+    HistoryIndexCacheSize=128M
+    TrendCacheSize=512M
+    ValueCacheSize=512M
+    #VMwareCacheSize=128M
+    Timeout=15
+    TrapperTimeout=300
+    UnreachablePeriod=45
+    UnavailableDelay=60
+    UnreachableDelay=15
+    LogSlowQueries=3000
+    # Paths
+    AlertScriptsPath=/usr/lib/zabbix/alertscripts
+    ExternalScripts=/usr/lib/zabbix/externalscripts
+    Include=/etc/zabbix/zabbix_server.conf.d/*.conf
+    LoadModulePath=/usr/lib/zabbix/modules
+    FpingLocation=/usr/sbin/fping
 {{- end }}
