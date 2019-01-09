@@ -1,94 +1,94 @@
-{{- if .Values.db.configuration }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Values.db.name }}
-  labels:
-    helm.sh/chart: {{ include "zabbix.chart" . }}
-    app.kubernetes.io/name: {{ include "zabbix.name" . }}
-    app.kubernetes.io/instance: {{ .Values.db.name }}
-    app.kubernetes.io/release: {{ .Release.name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-data:
-{{- if .Values.db.configuration.files }}
-{{- range $key, $val := .Values.db.configuration.files }}
-  {{ $key }}: |-
-{{ $val | indent 4}}
-{{- end }}
-{{- end }}
-  postgresql.conf: |-
-    listen_addresses = '*'
-    max_connections = 400
-    shared_buffers = 4GB
-    temp_buffers = 32MB
-    work_mem = 64MB
-    maintenance_work_mem = 2GB
-    effective_cache_size = 12GB
-    dynamic_shared_memory_type = posix
-    checkpoint_timeout = 600
-    default_statistics_target = 500
-    random_page_cost = 1.1
-    checkpoint_completion_target = 0.9
-
-    #wal_level = replica
-    synchronous_commit = off
-    #synchronous_standby_names =
-    wal_compression = on
-    wal_buffers = 16MB
-    min_wal_size = 4GB
-    max_wal_size = 8GB
-    #max_wal_senders = 10
-    wal_keep_segments = 0
-    #max_replication_slots = 4
-
-    hot_standby = on
-    hot_standby_feedback = on
-    max_standby_archive_delay = -1
-    max_standby_streaming_delay = -1
-
-    autovacuum_max_workers = 6
-    autovacuum_vacuum_cost_limit = 2000
-    autovacuum_vacuum_cost_delay = 5ms
-    vacuum_cost_limit = 2000
-
-    autovacuum_vacuum_scale_factor = 0.0
-    autovacuum_vacuum_threshold = 1000
-    autovacuum_analyze_scale_factor = 0.0
-    autovacuum_analyze_threshold = 1000
-
-    max_worker_processes = 4
-    max_parallel_workers = 4
-    max_parallel_workers_per_gather = 2
-    effective_io_concurrency = 200
-    max_locks_per_transaction = 64
-
-    logging_collector = on
-    log_destination = 'syslog'
-    log_filename = 'postgresql-%Y-%m.log'
-    log_line_prefix = 'user=%u,db=%d,app=%a,client=%h,session=%c,state=%e,transaction=%x '
-    log_rotation_age = 1d
-    log_rotation_size = 0
-    log_truncate_on_rotation = off
-    log_timezone = 'UTC'
-    log_checkpoints = on
-    log_lock_waits = on
-    log_temp_files = 0
-    log_autovacuum_min_duration = 500
-    log_min_duration_statement = 2000
-
-    shared_preload_libraries = 'pg_stat_statements, pg_buffercache, timescaledb'
-    pg_stat_statements.max = 5000
-    pg_stat_statements.track = top
-
-    datestyle = 'ISO, DMY'
-    timezone = 'UTC'
-    lc_messages = 'en_US.UTF-8'
-    lc_monetary = 'en_US.UTF-8'
-    lc_numeric = 'en_US.UTF-8'
-    lc_time = 'en_US.UTF-8'
-    default_text_search_config = 'pg_catalog.english'
-{{- end }}
+#{{- if .Values.db.configuration }}
+#---
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: {{ .Values.db.name }}
+#  labels:
+#    helm.sh/chart: {{ include "zabbix.chart" . }}
+#    app.kubernetes.io/name: {{ include "zabbix.name" . }}
+#    app.kubernetes.io/instance: {{ .Values.db.name }}
+#    app.kubernetes.io/release: {{ .Release.name }}
+#    app.kubernetes.io/managed-by: {{ .Release.Service }}
+#data:
+#{{- if .Values.db.configuration.files }}
+#{{- range $key, $val := .Values.db.configuration.files }}
+#  {{ $key }}: |-
+#{{ $val | indent 4}}
+#{{- end }}
+#{{- end }}
+#  postgresql.conf: |-
+#    listen_addresses = '*'
+#    max_connections = 400
+#    shared_buffers = 4GB
+#    temp_buffers = 32MB
+#    work_mem = 64MB
+#    maintenance_work_mem = 2GB
+#    effective_cache_size = 12GB
+#    dynamic_shared_memory_type = posix
+#    checkpoint_timeout = 600
+#    default_statistics_target = 500
+#    random_page_cost = 1.1
+#    checkpoint_completion_target = 0.9
+#
+#    #wal_level = replica
+#    synchronous_commit = off
+#    #synchronous_standby_names =
+#    wal_compression = on
+#    wal_buffers = 16MB
+#    min_wal_size = 4GB
+#    max_wal_size = 8GB
+#    #max_wal_senders = 10
+#    wal_keep_segments = 0
+#    #max_replication_slots = 4
+#
+#    hot_standby = on
+#    hot_standby_feedback = on
+#    max_standby_archive_delay = -1
+#    max_standby_streaming_delay = -1
+#
+#    autovacuum_max_workers = 6
+#    autovacuum_vacuum_cost_limit = 2000
+#    autovacuum_vacuum_cost_delay = 5ms
+#    vacuum_cost_limit = 2000
+#
+#    autovacuum_vacuum_scale_factor = 0.0
+#    autovacuum_vacuum_threshold = 1000
+#    autovacuum_analyze_scale_factor = 0.0
+#    autovacuum_analyze_threshold = 1000
+#
+#    max_worker_processes = 4
+#    max_parallel_workers = 4
+#    max_parallel_workers_per_gather = 2
+#    effective_io_concurrency = 200
+#    max_locks_per_transaction = 64
+#
+#    logging_collector = on
+#    log_destination = 'syslog'
+#    log_filename = 'postgresql-%Y-%m.log'
+#    log_line_prefix = 'user=%u,db=%d,app=%a,client=%h,session=%c,state=%e,transaction=%x '
+#    log_rotation_age = 1d
+#    log_rotation_size = 0
+#    log_truncate_on_rotation = off
+#    log_timezone = 'UTC'
+#    log_checkpoints = on
+#    log_lock_waits = on
+#    log_temp_files = 0
+#    log_autovacuum_min_duration = 500
+#    log_min_duration_statement = 2000
+#
+#    shared_preload_libraries = 'pg_stat_statements, pg_buffercache, timescaledb'
+#    pg_stat_statements.max = 5000
+#    pg_stat_statements.track = top
+#
+#    datestyle = 'ISO, DMY'
+#    timezone = 'UTC'
+#    lc_messages = 'en_US.UTF-8'
+#    lc_monetary = 'en_US.UTF-8'
+#    lc_numeric = 'en_US.UTF-8'
+#    lc_time = 'en_US.UTF-8'
+#    default_text_search_config = 'pg_catalog.english'
+#{{- end }}
 
 {{- if .Values.srv.configuration }}
 ---
