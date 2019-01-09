@@ -65,7 +65,7 @@ spec:
         mountPath: /var/lib/postgresql/data/11/postgresql.conf
         subPath: postgresql.conf
         readOnly: false
-      - name: pg_hba-config
+      - name: pg-hba-config
         mountPath: /var/lib/postgresql/data/11/pg_hba.conf
         subPath: pg_hba.conf
         readOnly: false
