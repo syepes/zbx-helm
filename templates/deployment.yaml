@@ -62,6 +62,16 @@ spec:
       volumes:
       {{- if .Values.db.configuration }}
       - name: config-storage
+        mountPath: /var/lib/postgresql/data/11/postgresql.conf
+        subPath: postgresql.conf
+        readOnly: false
+      - name: config-storage
+        mountPath: /var/lib/postgresql/data/11/pg_hba.conf
+        subPath: pg_hba.conf
+        readOnly: false
+      {{- end }}
+      {{- if .Values.db.configuration }}
+      - name: config-storage
         configMap:
           name: {{ .Values.db.name }}
       {{- end }}

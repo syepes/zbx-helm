@@ -25,6 +25,17 @@ db:
     accessMode: ReadWriteOnce
     storageClassName: zone1
 
+  # Custom PostgreSQL Server configuration files used to override default settings
+  configuration:
+    global:
+    files:
+      pg_hba.conf: |-
+        # TYPE  DATABASE        USER            ADDRESS                 METHOD
+        local   all             all                                     trust
+        host    all             all             127.0.0.1/32            trust
+        host    all             all             ::1/128                 trust
+        host    all             all             0.0.0.0/0               md5
+
   pgsql:
     user: "zabbix"
     pass: "zabbix"
