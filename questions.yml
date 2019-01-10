@@ -10,7 +10,7 @@ questions:
     - "org"
     - "onbe"
   group: "Zabbix Configuration"
-  show_if: db.env.initdata!=local
+  show_subquestion_if: db.env.initdata!=local
   subquestions:
   - variable: db.env.initadm
     label: Zabbix admin user
