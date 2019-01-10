@@ -10,7 +10,7 @@ questions:
     - "org"
     - "onbe"
   group: "Zabbix Configuration"
-  show_subquestion_if: true
+  show_if: db.env.initdata!=local
   subquestions:
   - variable: db.env.initadm
     label: Zabbix admin user
@@ -24,6 +24,8 @@ questions:
   description: "Number of months that the RAW Item values will be keeped"
   default: "3"
   type: int
+  min: 1
+  max: 12
   group: "Zabbix Configuration"
 
 - variable: db.env.trend
@@ -31,6 +33,8 @@ questions:
   description: "Number of months that the TREND Item values will be keeped"
   default: "24"
   type: int
+  min: 1
+  max: 24
   group: "Zabbix Configuration"
 
 #image configurations
@@ -60,7 +64,7 @@ questions:
 
 #web configurations
 - variable: web.replicaCount
-  label: Web Instances
+  label: Number of Web Instances
   description: "Enter your Web Instances"
   default: 2
   type: int
@@ -101,23 +105,6 @@ questions:
       - "NodePort"
 
 #db configurations
-- variable: db.enabled
-  label: Create Service
-  description: "Create DB service endpoint"
-  default: false
-  type: boolean
-  group: "DB Configuration"
-  show_subquestion_if: true
-  subquestions:
-  - variable: db.service.type
-    label: Service Type
-    description: "Service type to create"
-    default: "ClusterIP"
-    type: enum
-    options:
-      - "ClusterIP"
-      - "NodePort"
-
 - variable: db.persistence.enabled
   label: DB Persistent Volume Enabled
   description: "Enable DB persistence using PVC"
@@ -141,3 +128,20 @@ questions:
     options:
       - "zone1"
       - "zone2"
+
+- variable: db.enabled
+  label: Create Service
+  description: "Create DB service endpoint"
+  default: false
+  type: boolean
+  group: "DB Configuration"
+  show_subquestion_if: true
+  subquestions:
+  - variable: db.service.type
+    label: Service Type
+    description: "Service type to create"
+    default: "ClusterIP"
+    type: enum
+    options:
+      - "ClusterIP"
+      - "NodePort"
