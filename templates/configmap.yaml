@@ -26,7 +26,7 @@ data:
     DebugLevel=3
     PidFile=/var/run/zabbix/zabbix_server.pid
     # Database
-    DBHost={{ .Values.srv.name }}
+    DBHost={{ .Values.db.name }}
     DBName=zabbix
     DBUser={{ .Values.db.pgsql.user }}
     DBPassword={{ .Values.db.pgsql.pass }}
