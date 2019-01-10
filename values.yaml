@@ -42,6 +42,7 @@ db:
 
   env:
     initdata: local
+    initadm:
     raw: 3
     trend: 24
 
