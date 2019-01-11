@@ -4,13 +4,13 @@ questions:
   label: Zabbix Auth Domain profile
   description: "What Ubisoft domain should be used"
   default: "local"
-  type: string
+  type: enum
   options:
     - "local"
     - "org"
     - "onbe"
   group: "Zabbix Configuration"
-  show_subquestion_if: db.env.initdata!=local
+  show_subquestion_if: db.env.initdata!="local"
   subquestions:
   - variable: db.env.initadm
     label: Zabbix admin user
